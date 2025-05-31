@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.Set;
 
 @Configuration
@@ -29,21 +30,34 @@ public class RolesConfig implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-        var roleAdmin = roleRepository.findByName(Role.Values.ADMIN.name());
+        Role adminRole = roleRepository.findByName(Role.Values.ADMIN.name());
+        if (adminRole == null) {
+            adminRole = new Role(Role.Values.ADMIN.name());
+            adminRole.setRoleId(Role.Values.ADMIN.getRoleId()); // Defina o ID da role
+            roleRepository.save(adminRole);
+            System.out.println("Role ADMIN criada.");
+        }
 
-        var userAdmin = userRepository.findByUsername("admin");
-        
-        userAdmin.ifPresentOrElse(
-                user -> {
-                    System.out.println("Admin já existe");
-                    },
-                () -> {
-                    var user = new User();
-                    user.setUsername("admin");
-                    user.setPassword(bCryptPasswordEncoder.encode("admin"));
-                    user.setRoles(Set.of(roleAdmin));
-                    userRepository.save(user);
-                }
-        );
+        Role basicRole = roleRepository.findByName(Role.Values.BASIC.name());
+        if (basicRole == null) {
+            basicRole = new Role(Role.Values.BASIC.name());
+            basicRole.setRoleId(Role.Values.BASIC.getRoleId()); // Defina o ID da role
+            roleRepository.save(basicRole);
+            System.out.println("Role BASIC criada.");
+        }
+
+        Optional<User> userAdminOpt = userRepository.findByUsername("admin");
+
+        if (userAdminOpt.isEmpty()) {
+            User adminUser = new User();
+            adminUser.setUsername("admin");
+            adminUser.setEmail("admin@gmail.com"); 
+            adminUser.setPassword(bCryptPasswordEncoder.encode("admin"));
+            adminUser.setRoles(Set.of(adminRole)); 
+            userRepository.save(adminUser);
+            System.out.println("Usuário admin criado.");
+        } else {
+            System.out.println("Usuário admin já existe.");
+        }
     }
 }
