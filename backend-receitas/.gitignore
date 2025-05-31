@@ -32,3 +32,6 @@ build/
 
 ### VS Code ###
 .vscode/
+/src/main/resources/app.pub
+/src/main/resources/app-key.ppk
+/src/main/resources/app.key
