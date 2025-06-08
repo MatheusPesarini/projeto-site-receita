@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SubmitRegisterForm {
+  constructor() {}
 
-  constructor() { }
-
-  submitForm(formData: any): Promise<any> {
-    
-  }
+  // submitForm(formData: any): Promise<number> {
+  //   return 1;
+  // }
 }

@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-navbar',
-  imports: [],
+  imports: [MatIconModule],
   templateUrl: './navbar.html',
-  styleUrl: './navbar.css'
+  styleUrl: './navbar.css',
 })
-export class Navbar {
-
-}
+export class NavbarComponent {}
