@@ -7,16 +7,16 @@ export const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    title: 'Home'
+    title: 'Home',
   },
   {
     path: 'register',
     component: RegisterComponent,
-    title: 'Registro'
+    title: 'Registro',
   },
   {
     path: 'login',
     component: LoginComponent,
-    title: 'Login'
-  }
+    title: 'Login',
+  },
 ];

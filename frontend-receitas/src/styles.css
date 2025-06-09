@@ -5,6 +5,7 @@
 
 @theme {
   --font-cursive: "Edu NSW ACT Cursive", cursive;
+  --font-inter: "Inter", sans-serif;
 }
 
 html,

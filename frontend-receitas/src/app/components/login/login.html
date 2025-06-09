@@ -1,7 +1,31 @@
-<div class="flex flex-col items-center justify-center h-screen bg-orange-100">
-  <div class="bg-blue-300 h-2/3 w-2/6 rounded-4xl flex items-center justify-center">
-    <form>
-      <a>Teste</a>
+<div class="flex flex-col items-center justify-center min-h-screen bg-orange-100 p-4">
+  <div class="bg-blue-300 p-8 rounded-xl shadow-xl w-full max-w-md">
+    <h2 class="text-3xl font-cursive text-start text-white mb-8">Login</h2>
+    <form class="space-y-6">
+      <mat-form-field class="w-full">
+        <mat-label>Email</mat-label>
+        <input
+          type="email"
+          matInput
+          [formControl]="emailFormControl"
+          placeholder="Ex. pat@example.com"
+        />
+        @if (emailFormControl.hasError('email') && !emailFormControl.hasError('required')) {
+        <mat-error>Digite um email válido</mat-error>
+        } @if (emailFormControl.hasError('required')) {
+        <mat-error>Email é <strong>obrigatório</strong></mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Senha</mat-label>
+        <input type="password" matInput [formControl]="passwordFormControl" />
+        @if (passwordFormControl.hasError('minlength') && !passwordFormControl.hasError('required'))
+        {
+        <mat-error>Digite uma senha maior que 6 caracteres</mat-error>
+        } @if (passwordFormControl.hasError('required')) {
+        <mat-error>Senha é <strong>obrigatório</strong></mat-error>
+        }
+      </mat-form-field>
     </form>
   </div>
 </div>
