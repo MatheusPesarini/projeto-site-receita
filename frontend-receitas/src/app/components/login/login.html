@@ -1,31 +1,50 @@
 <div class="flex flex-col items-center justify-center min-h-screen bg-orange-100 p-4">
   <div class="bg-blue-300 p-8 rounded-xl shadow-xl w-full max-w-md">
     <h2 class="text-3xl font-cursive text-start text-white mb-8">Login</h2>
-    <form class="space-y-6">
+    <form class="space-y-6" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <mat-form-field class="w-full">
         <mat-label>Email</mat-label>
-        <input
-          type="email"
-          matInput
-          [formControl]="emailFormControl"
-          placeholder="Ex. pat@example.com"
-        />
-        @if (emailFormControl.hasError('email') && !emailFormControl.hasError('required')) {
+        <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com" />
+        @if (loginForm.get('email')?.hasError('email') &&
+        !loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched) {
         <mat-error>Digite um email válido</mat-error>
-        } @if (emailFormControl.hasError('required')) {
+        } @if (loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched) {
         <mat-error>Email é <strong>obrigatório</strong></mat-error>
         }
       </mat-form-field>
+
       <mat-form-field class="w-full">
         <mat-label>Senha</mat-label>
-        <input type="password" matInput [formControl]="passwordFormControl" />
-        @if (passwordFormControl.hasError('minlength') && !passwordFormControl.hasError('required'))
-        {
+        <input type="password" matInput formControlName="password" />
+        @if (loginForm.get('password')?.hasError('minlength') &&
+        !loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched) {
         <mat-error>Digite uma senha maior que 6 caracteres</mat-error>
-        } @if (passwordFormControl.hasError('required')) {
+        } @if (loginForm.get('password')?.hasError('required') &&
+        loginForm.get('password')?.touched) {
         <mat-error>Senha é <strong>obrigatório</strong></mat-error>
         }
       </mat-form-field>
+
+      <div class="flex justify-center">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          class="w-full send-button text-white px-2 py-3 flex font-inter font-semibold items-center justify-center cursor-pointer transition-colors rounded-xl hover:shadow-lg"
+          [disabled]="loginForm.invalid"
+        >
+          Logar
+          <mat-icon class="ml-2">send</mat-icon>
+        </button>
+      </div>
+      <div class="text-center">
+        <span class="text-sm text-white">Não tem uma conta? </span>
+        <a
+          routerLink="/register"
+          class="text-sm text-orange-100 hover:text-orange-200 font-medium underline cursor-pointer hover:brightness-110"
+          >Registre-se</a
+        >
+      </div>
     </form>
   </div>
 </div>
