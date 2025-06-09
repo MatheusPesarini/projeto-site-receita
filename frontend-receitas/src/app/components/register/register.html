@@ -26,6 +26,25 @@
         <mat-error>Senha é <strong>obrigatório</strong></mat-error>
         }
       </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Confirmar Senha</mat-label>
+        <input type="password" matInput [formControl]="confirmPasswordFormControl" />
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Nome de Usuário</mat-label>
+        <input
+          type="text"
+          matInput
+          [formControl]="usernameFormControl"
+          placeholder="Ex. Matheus123"
+        />
+        @if (usernameFormControl.hasError('minlength') && !usernameFormControl.hasError('required'))
+        {
+        <mat-error>Digite um nome com mais de 4 caracteres</mat-error>
+        } @if (usernameFormControl.hasError('required')) {
+        <mat-error>Nome de Usuário é <strong>obrigatório</strong></mat-error>
+        }
+      </mat-form-field>
       <div class="flex justify-center">
         <button
           matFab

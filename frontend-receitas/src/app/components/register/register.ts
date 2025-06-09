@@ -28,4 +28,6 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 export class RegisterComponent {
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   passwordFormControl = new FormControl('', [Validators.required, Validators.minLength(6)]);
+  usernameFormControl = new FormControl('', [Validators.required, Validators.minLength(4)]);
+  confirmPasswordFormControl = new FormControl('', [Validators.required, Validators.minLength(6)]);
 }
