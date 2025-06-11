@@ -1,6 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {
-  FormControl,
   Validators,
   FormsModule,
   ReactiveFormsModule,
@@ -13,6 +12,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { SubmitRegisterService } from '../../services/submit-register-form';
+import { RegisterDto, RegisterResponseDto } from '../../services/dto/dto';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -30,20 +32,17 @@ import { MatButtonModule } from '@angular/material/button';
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
 
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
-  passwordFormControl = new FormControl('', [Validators.required, Validators.minLength(6)]);
-  usernameFormControl = new FormControl('', [Validators.required, Validators.minLength(4)]);
-  confirmPasswordFormControl = new FormControl('', [Validators.required]);
-
   private fb = inject(FormBuilder);
+  private router = inject(Router);
+  private submitRegisterForm = inject(SubmitRegisterService);
 
   ngOnInit(): void {
     this.registerForm = this.fb.group(
       {
-        email: this.emailFormControl, // Você pode definir os FormControls aqui diretamente também
-        username: this.usernameFormControl,
-        password: this.passwordFormControl,
-        confirmPassword: this.confirmPasswordFormControl,
+        email: ['', [Validators.required, Validators.email]],
+        username: ['', [Validators.required, Validators.minLength(4)]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', Validators.required],
       },
       { validators: this.passwordsMatchValidator },
     );
@@ -67,6 +66,26 @@ export class RegisterComponent implements OnInit {
   onSubmit(): void {
     if (this.registerForm.valid) {
       console.log('Formulário válido:', this.registerForm.value);
+
+      const formValues = this.registerForm.value;
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { confirmPassword, ...rest } = formValues;
+      const payload = rest as RegisterDto;
+
+      this.submitRegisterForm.registerUser(payload).subscribe({
+        next: (response: RegisterResponseDto) => {
+          console.log('Resposta do servidor:', response);
+          this.router.navigate(['/login']);
+        },
+        error: (error: string) => {
+          console.error('Erro ao registrar usuário:', error);
+          alert(error || 'Erro ao registrar usuário');
+        },
+        complete: () => {
+          console.log('Registro concluído');
+        },
+      });
     } else {
       console.log('Formulário inválido');
       this.registerForm.markAllAsTouched();
