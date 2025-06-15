@@ -1,1 +1,145 @@
-<div class="flex flex-col items-center justify-center h-screen bg-orange-100"></div>
+<div class="min-h-screen bg-orange-50 text-gray-800">
+  <!-- Hero Section -->
+  <section
+    class="relative bg-cover bg-center py-20 md:py-32"
+    style="background-image: url('https://via.placeholder.com/1920x600.png?text=Comida+Deliciosa')"
+  >
+    <div class="absolute inset-0 bg-black opacity-40"></div>
+    <div class="container mx-auto px-4 text-center relative z-10">
+      <h1 class="text-4xl md:text-6xl font-cursive text-white mb-6">Descubra Sabores Incríveis</h1>
+      <p class="text-lg md:text-xl text-orange-100 mb-8">
+        Encontre as melhores receitas para todas as ocasiões.
+      </p>
+      <div class="max-w-xl mx-auto">
+        <mat-form-field appearance="outline" class="w-full custom-search-bar">
+          <mat-label class="text-orange-100">Buscar receitas...</mat-label>
+          <input matInput type="text" class="text-white" />
+          <button mat-icon-button matSuffix aria-label="Buscar">
+            <mat-icon class="text-orange-100">search</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categorias Populares -->
+  <section class="py-12 md:py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-semibold text-center text-orange-600 mb-10">Categorias Populares</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+        @for (categoria of categoriasPopulares; track categoria.nome) {
+        <a
+          [routerLink]="categoria.rota"
+          class="group flex flex-col items-center p-6 bg-orange-50 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1"
+        >
+          <mat-icon
+            class="text-5xl text-orange-500 mb-3 group-hover:text-orange-600 transition-colors duration-300"
+            >{{ categoria.icone }}</mat-icon
+          >
+          <h3 class="text-lg font-medium text-gray-700 group-hover:text-orange-700">
+            {{ categoria.nome }}
+          </h3>
+        </a>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Receitas em Destaque -->
+  <section class="py-12 md:py-16 bg-orange-50">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-semibold text-center text-orange-600 mb-10">Receitas em Destaque</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+        @for (receita of receitasDestaque; track receita.nome) {
+        <mat-card
+          class="rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:-translate-y-1"
+        >
+          <img
+            mat-card-image
+            [src]="receita.imagemUrl"
+            [alt]="receita.nome"
+            class="h-56 w-full object-cover"
+          />
+          <mat-card-header class="pt-4">
+            <mat-card-title class="text-xl font-semibold text-orange-700"
+              >{{ receita.nome }}</mat-card-title
+            >
+          </mat-card-header>
+          <mat-card-content class="text-gray-600 min-h-[60px]">
+            <p>{{ receita.descricao }}</p>
+          </mat-card-content>
+          <mat-card-actions class="px-4 pb-4 flex justify-between items-center">
+            <div class="text-sm text-gray-500">
+              <span class="flex items-center mr-3">
+                <mat-icon class="text-sm mr-1">timer</mat-icon>
+                {{ receita.tempoPreparo }}
+              </span>
+              <!-- <span class="flex items-center">
+                <mat-icon class="text-sm mr-1">restaurant</mat-icon>
+                {{ receita.porcoes }}
+              </span> -->
+            </div>
+            <button mat-stroked-button color="primary" [routerLink]="receita.rota">
+              Ver Receita
+            </button>
+          </mat-card-actions>
+        </mat-card>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action (Opcional) -->
+  <section class="py-16 bg-orange-500 text-white">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl font-semibold mb-4">Pronto para Cozinhar?</h2>
+      <p class="text-lg mb-8">Junte-se à nossa comunidade e compartilhe suas próprias receitas!</p>
+      <button
+        mat-raised-button
+        color="accent"
+        class="bg-white text-orange-600 hover:bg-orange-50 px-8 py-3 rounded-lg text-lg font-semibold"
+        routerLink="/register"
+      >
+        Crie sua Conta
+      </button>
+    </div>
+  </section>
+</div>
+
+<!-- Adicione este CSS ao seu home.css ou styles.css global para estilizar a barra de busca -->
+<!-- Se colocar em home.css, precisará de ::ng-deep ou encapsulamento desabilitado para algumas dessas regras -->
+<!-- Se for em styles.css, não precisa de ::ng-deep -->
+<!-- Exemplo para home.css (pode precisar de ajustes): -->
+<!--
+::ng-deep .custom-search-bar .mat-mdc-form-field-flex {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 8px !important;
+}
+::ng-deep .custom-search-bar .mat-mdc-text-field-wrapper {
+  background-color: transparent !important;
+}
+::ng-deep .custom-search-bar .mdc-notched-outline__leading,
+::ng-deep .custom-search-bar .mdc-notched-outline__notch,
+::ng-deep .custom-search-bar .mdc-notched-outline__trailing {
+  border-color: rgba(255, 165, 0, 0.5) !important;
+}
+::ng-deep .custom-search-bar:hover .mdc-notched-outline__leading,
+::ng-deep .custom-search-bar:hover .mdc-notched-outline__notch,
+::ng-deep .custom-search-bar:hover .mdc-notched-outline__trailing {
+  border-color: #fb923c !important; // orange-400
+}
+::ng-deep .custom-search-bar.mat-focused .mdc-notched-outline__leading,
+::ng-deep .custom-search-bar.mat-focused .mdc-notched-outline__notch,
+::ng-deep .custom-search-bar.mat-focused .mdc-notched-outline__trailing {
+  border-color: #f97316 !important; // orange-500
+  border-width: 2px !important;
+}
+::ng-deep .custom-search-bar .mat-mdc-input-element {
+  color: white !important;
+}
+::ng-deep .custom-search-bar .mat-mdc-form-field-hint,
+::ng-deep .custom-search-bar .mat-mdc-form-field-error,
+::ng-deep .custom-search-bar .mat-mdc-floating-label {
+  color: #fed7aa !important; // orange-200
+}
+-->

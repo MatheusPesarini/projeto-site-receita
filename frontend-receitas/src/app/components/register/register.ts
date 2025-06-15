@@ -76,7 +76,7 @@ export class RegisterComponent implements OnInit {
       this.submitRegisterForm.registerUser(payload).subscribe({
         next: (response: RegisterResponseDto) => {
           console.log('Resposta do servidor:', response);
-          this.router.navigate(['/login']);
+          this.router.navigate(['/register/preference']);
         },
         error: (error: string) => {
           console.error('Erro ao registrar usuário:', error);
